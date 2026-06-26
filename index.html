@@ -27,16 +27,17 @@
     <button data-page="search">Search</button>
   </nav>
 
-  <section class="filters" aria-label="Filters">
-    <label>Member<select id="memberFilter"><option value="">All</option></select></label>
-    <label>Sport group<select id="sportFilter"><option value="">All</option></select></label>
-    <label>Bet type<select id="betFilter"><option value="">All</option></select></label>
-    <label>Year<select id="yearFilter"><option value="">All</option></select></label>
-    <label>Odds<select id="oddsFilter"><option value="">All</option></select></label>
-    <label>Result<select id="resultFilter"><option value="">All</option><option>Yes</option><option>No</option></select></label>
-    <label class="grow">Search<input id="textFilter" type="search" placeholder="NRL, Warriors, Bulldogs, H2H..."></label>
-    <label>Min picks<input id="minPicks" type="number" min="1" value="10"></label>
-    <button id="resetBtn" type="button">Reset</button>
+  <section class="filters" id="filtersPanel" aria-label="Filters">
+    <label class="priority">Member<select id="memberFilter"><option value="">All</option></select></label>
+    <label class="priority">Sport group<select id="sportFilter"><option value="">All</option></select></label>
+    <label class="priority grow">Search<input id="textFilter" type="search" placeholder="NRL, Warriors, Bulldogs, H2H..."></label>
+    <button id="mobileFiltersBtn" class="mobile-only" type="button" aria-expanded="false">Advanced filters</button>
+    <label class="advancedFilter">Bet type<select id="betFilter"><option value="">All</option></select></label>
+    <label class="advancedFilter">Year<select id="yearFilter"><option value="">All</option></select></label>
+    <label class="advancedFilter">Odds<select id="oddsFilter"><option value="">All</option></select></label>
+    <label class="advancedFilter">Result<select id="resultFilter"><option value="">All</option><option>Yes</option><option>No</option></select></label>
+    <label class="advancedFilter">Min picks<input id="minPicks" type="number" min="1" value="10"></label>
+    <button id="resetBtn" class="advancedFilter" type="button">Reset</button>
   </section>
 
   <section class="quick" id="quickButtons"></section>
