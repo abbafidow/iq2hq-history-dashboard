@@ -1,10 +1,10 @@
-# IQ2GQ Historical Performance Hub
+# IQ2GQ Intelligence Centre
 
-Static GitHub Pages dashboard for IQ2GQ historical betting data.
+Static GitHub Pages dashboard for IQ2GQ historical betting performance.
 
 ## Files to upload
 
-Upload these files to the root of your GitHub repository:
+Upload these files to the root of the GitHub repository:
 
 - index.html
 - styles.css
@@ -12,34 +12,26 @@ Upload these files to the root of your GitHub repository:
 - data.js
 - README.md
 
-Do not upload the ZIP file itself.
+Do not upload the zip file itself.
 
-## What the dashboard does
+## Publishing through GitHub Pages
 
-- Searches all historical resulted picks in the browser.
-- Filters by member, year, sport group, specific sport, bet category, odds band and result.
-- Ranks members using success rate, wins, $10 return, ROI or balanced score.
-- Shows best sport and bet combinations.
-- Shows member success charts, sport charts, odds heatmap and current form.
-- Shows detailed pick search results.
+1. Open the repository.
+2. Click Settings.
+3. Click Pages.
+4. Under Source, choose Deploy from a branch.
+5. Choose Branch: main.
+6. Choose Folder: / (root).
+7. Click Save.
+
+Your site will be available at:
+
+https://YOUR-GITHUB-NAME.github.io/YOUR-REPOSITORY-NAME/
 
 ## Updating the data
 
-Replace data.js with an updated export using the same structure:
+Replace data.js with a newer exported version using the same structure.
 
-window.IQ2GQ_DATA = [...];
+## Notes
 
-Keep the file name as data.js.
-
-## Publishing on GitHub Pages
-
-1. Create a repository.
-2. Upload the files above.
-3. Go to Settings - Pages.
-4. Choose Deploy from a branch.
-5. Select main and /(root).
-6. Save.
-
-Your site will publish at:
-
-https://YOUR-GITHUB-NAME.github.io/REPOSITORY-NAME/
+This is a client-side static site. No data leaves the browser. The rankings use a balanced score that combines success rate, sample size and a simple $10 return metric.

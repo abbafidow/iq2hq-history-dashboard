@@ -3,31 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IQ2GQ Historical Performance Hub</title>
+  <title>IQ2GQ Intelligence Centre</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
+  <header class="hero">
     <div>
       <p class="eyebrow">IQ2GQ - Where intellect meets style</p>
-      <h1>Historical Performance Hub</h1>
-      <p class="subhead">Search the full pick history to find member strengths by sport, bet type, odds range, option and form.</p>
+      <h1>Intelligence Centre</h1>
+      <p class="subhead">Historical search, leaderboards, sports intelligence, records and decision support from the full pick dataset.</p>
     </div>
-    <div class="status-card">
-      <span id="dataCount">0</span>
-      <small>resulted picks loaded</small>
+    <div class="hero-actions">
+      <div class="status-card"><b id="dataCount">0</b><span>resulted picks</span></div>
+      <div class="status-card"><b id="dateRange">-</b><span>history range</span></div>
     </div>
   </header>
+
+  <nav class="tabs" aria-label="Dashboard pages">
+    <button class="tab active" data-page="home">Home</button>
+    <button class="tab" data-page="members">Members</button>
+    <button class="tab" data-page="sports">Sports</button>
+    <button class="tab" data-page="bets">Bet types</button>
+    <button class="tab" data-page="odds">Odds explorer</button>
+    <button class="tab" data-page="teams">Teams/options</button>
+    <button class="tab" data-page="records">Records</button>
+    <button class="tab" data-page="insights">AI insights</button>
+    <button class="tab" data-page="search">Search</button>
+  </nav>
 
   <main>
     <section class="panel filters">
       <div class="panel-title">
-        <h2>Search and filter</h2>
-        <button id="resetBtn" type="button">Reset</button>
+        <h2>Global filters</h2>
+        <button id="resetBtn" type="button">Reset filters</button>
       </div>
       <div class="filter-grid">
-        <label>Search team, option or notes
-          <input id="searchInput" type="search" placeholder="e.g. Warriors, Ravens, H2H, NRL">
+        <label>Search
+          <input id="searchInput" type="search" placeholder="Warriors, Ravens, H2H, NRL, etc">
         </label>
         <label>Member
           <select id="memberFilter"><option value="">All members</option></select>
@@ -48,102 +60,95 @@
           <select id="oddsBandFilter"><option value="">All odds</option></select>
         </label>
         <label>Result
-          <select id="resultFilter">
-            <option value="">All results</option>
-            <option value="Yes">Wins only</option>
-            <option value="No">Losses only</option>
-          </select>
+          <select id="resultFilter"><option value="">All results</option><option value="Yes">Wins only</option><option value="No">Losses only</option></select>
         </label>
-        <label>Minimum picks for ranking
-          <input id="minPicks" type="number" min="1" max="200" value="5">
+        <label>Minimum picks
+          <input id="minPicks" type="number" min="1" max="200" value="8">
         </label>
-        <label>Sort rankings by
-          <select id="sortBy">
-            <option value="score">Balanced score</option>
-            <option value="success">Success rate</option>
-            <option value="wins">Wins</option>
-            <option value="roi">$10 return</option>
-            <option value="avgOdds">Average odds</option>
-          </select>
+        <label>Rank by
+          <select id="sortBy"><option value="score">Balanced score</option><option value="success">Success rate</option><option value="wins">Wins</option><option value="roi">$10 return</option><option value="avgOdds">Average odds</option></select>
         </label>
       </div>
       <div class="quick-buttons" id="presetButtons"></div>
-      <p class="note">Use minimum picks to avoid false leaders from one-off wins. Balanced score rewards success rate, sample size and return.</p>
+      <p class="note">The minimum-picks setting protects against false leaders from one-off wins. Balanced score weighs success rate, sample size and the $10 return metric.</p>
     </section>
 
-    <section class="kpi-grid" id="kpiGrid"></section>
-
-    <section class="grid two-col">
-      <div class="panel">
-        <div class="panel-title">
-          <h2>Best members for this filter</h2>
-          <span id="rankingSummary"></span>
-        </div>
-        <div class="table-wrap">
-          <table id="memberTable"></table>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">
-          <h2>Member success rate</h2>
-          <span>ranked</span>
-        </div>
-        <canvas id="memberChart" height="310"></canvas>
-      </div>
+    <section id="page-home" class="page active">
+      <section class="kpi-grid" id="kpiGrid"></section>
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Top members</h2><span id="rankingSummary"></span></div><div class="table-wrap"><table id="homeMemberTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Member success rate</h2><span>qualified members</span></div><canvas id="memberChart" height="320"></canvas></div>
+      </section>
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Best combinations</h2><span>sport group + bet type</span></div><div class="table-wrap"><table id="homeComboTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Sport performance</h2><span>top volume groups</span></div><canvas id="sportChart" height="320"></canvas></div>
+      </section>
     </section>
 
-    <section class="grid two-col">
-      <div class="panel">
-        <div class="panel-title">
-          <h2>Best sport and bet combinations</h2>
-          <span>minimum picks applied</span>
-        </div>
-        <div class="table-wrap">
-          <table id="comboTable"></table>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">
-          <h2>Sport group performance</h2>
-          <span>top 12 by volume</span>
-        </div>
-        <canvas id="sportChart" height="310"></canvas>
-      </div>
+    <section id="page-members" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Member leaderboard</h2><span>filtered</span></div><div class="table-wrap tall"><table id="memberTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Member profile</h2><span id="profileHint">select or filter a member</span></div><div id="memberProfile" class="profile"></div></div>
+      </section>
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Member strengths</h2><span>best categories</span></div><div class="table-wrap"><table id="memberStrengthTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Current form</h2><span>last 20 picks</span></div><div class="table-wrap"><table id="formTable"></table></div></div>
+      </section>
     </section>
 
-    <section class="grid two-col">
-      <div class="panel">
-        <div class="panel-title">
-          <h2>Odds range heatmap</h2>
-          <span>member x odds</span>
-        </div>
-        <div id="heatmap" class="heatmap"></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">
-          <h2>Current form</h2>
-          <span>last 20 picks per member</span>
-        </div>
-        <div class="table-wrap">
-          <table id="formTable"></table>
-        </div>
-      </div>
+    <section id="page-sports" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Sports leaderboard</h2><span>filtered</span></div><div class="table-wrap tall"><table id="sportsTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Best member by sport</h2><span>minimum picks applied</span></div><div class="table-wrap tall"><table id="bestMemberSportTable"></table></div></div>
+      </section>
+      <section class="panel"><div class="panel-title"><h2>Sport x member matrix</h2><span>success rate</span></div><div id="sportMemberMatrix" class="matrix"></div></section>
     </section>
 
-    <section class="panel">
-      <div class="panel-title">
-        <h2>Pick search results</h2>
-        <span id="pickSummary"></span>
-      </div>
-      <div class="table-wrap tall">
-        <table id="pickTable"></table>
-      </div>
+    <section id="page-bets" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Bet type leaderboard</h2><span>filtered</span></div><div class="table-wrap"><table id="betTypeTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Best member by bet type</h2><span>minimum picks applied</span></div><div class="table-wrap"><table id="bestMemberBetTable"></table></div></div>
+      </section>
+      <section class="panel"><div class="panel-title"><h2>Bet type x odds matrix</h2><span>success rate and sample</span></div><div id="betOddsMatrix" class="matrix"></div></section>
+    </section>
+
+    <section id="page-odds" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Odds band performance</h2><span>all filtered picks</span></div><div class="table-wrap"><table id="oddsTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Member x odds heatmap</h2><span>success rate</span></div><div id="heatmap" class="heatmap"></div></div>
+      </section>
+      <section class="panel"><div class="panel-title"><h2>$2+ hunters</h2><span>ranked high-odds performance</span></div><div class="table-wrap"><table id="highOddsTable"></table></div></section>
+    </section>
+
+    <section id="page-teams" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Most backed options</h2><span>teams or selections</span></div><div class="table-wrap tall"><table id="optionTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Best member by option</h2><span>minimum picks applied</span></div><div class="table-wrap tall"><table id="optionMemberTable"></table></div></div>
+      </section>
+    </section>
+
+    <section id="page-records" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Records from loaded data</h2><span>calculated</span></div><div class="table-wrap"><table id="recordsTable"></table></div></div>
+        <div class="panel"><div class="panel-title"><h2>Streaks</h2><span>calculated by date order</span></div><div class="table-wrap"><table id="streakTable"></table></div></div>
+      </section>
+      <section class="panel"><div class="panel-title"><h2>Worst crash list</h2><span>lowest losing odds and biggest high-odds misses</span></div><div class="table-wrap"><table id="crashTable"></table></div></section>
+    </section>
+
+    <section id="page-insights" class="page">
+      <section class="grid two-col">
+        <div class="panel"><div class="panel-title"><h2>Recommendation engine</h2><span>rules-based</span></div><div id="recommendations" class="insights"></div></div>
+        <div class="panel"><div class="panel-title"><h2>Risk warnings</h2><span>weak spots</span></div><div id="warnings" class="insights"></div></div>
+      </section>
+      <section class="panel"><div class="panel-title"><h2>Question builder</h2><span>click a question to apply filters</span></div><div id="questionButtons" class="question-grid"></div></section>
+    </section>
+
+    <section id="page-search" class="page">
+      <section class="panel"><div class="panel-title"><h2>Pick search results</h2><span id="pickSummary"></span></div><div class="table-wrap very-tall"><table id="pickTable"></table></div></section>
     </section>
   </main>
 
-  <footer>
-    <p>Static dashboard. No data leaves the browser. Refresh data.js to update the site.</p>
-  </footer>
+  <footer><p>Static GitHub Pages site. No login, server or database required. Replace data.js to update the dataset.</p></footer>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
