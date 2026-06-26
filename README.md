@@ -1,28 +1,45 @@
-# IQ2GQ Historical Performance Dashboard
+# IQ2GQ Historical Performance Hub
 
-Static GitHub Pages dashboard for searching historical IQ2GQ picks.
+Static GitHub Pages dashboard for IQ2GQ historical betting data.
 
-## What it does
+## Files to upload
 
-- Searches historical picks by member, sport, bet name, bet type, year and odds range.
-- Ranks members by success rate with a minimum pick threshold.
-- Shows charts for member success, sport group success, odds band performance and year trend.
-- Runs fully in the browser using `data.js`.
+Upload these files to the root of your GitHub repository:
 
-## GitHub Pages setup
+- index.html
+- styles.css
+- app.js
+- data.js
+- README.md
 
-1. Create a new GitHub repository, for example `iq2gq-history-dashboard`.
-2. Upload `index.html`, `styles.css`, `app.js` and `data.js` to the repository root.
-3. Go to `Settings` > `Pages`.
-4. Under `Build and deployment`, choose `Deploy from a branch`.
-5. Select `main` and `/root`, then save.
-6. Your site will publish at `https://YOUR-USERNAME.github.io/iq2gq-history-dashboard/`.
+Do not upload the ZIP file itself.
+
+## What the dashboard does
+
+- Searches all historical resulted picks in the browser.
+- Filters by member, year, sport group, specific sport, bet category, odds band and result.
+- Ranks members using success rate, wins, $10 return, ROI or balanced score.
+- Shows best sport and bet combinations.
+- Shows member success charts, sport charts, odds heatmap and current form.
+- Shows detailed pick search results.
 
 ## Updating the data
 
-Replace `data.js` with a newly exported version when the longitudinal workbook changes.
-Do not edit the dashboard code unless the fields change.
+Replace data.js with an updated export using the same structure:
 
-## Data caveats
+window.IQ2GQ_DATA = [...];
 
-This dashboard ranks historical performance. It does not predict outcomes. Use minimum pick thresholds to avoid overvaluing members with very small samples.
+Keep the file name as data.js.
+
+## Publishing on GitHub Pages
+
+1. Create a repository.
+2. Upload the files above.
+3. Go to Settings - Pages.
+4. Choose Deploy from a branch.
+5. Select main and /(root).
+6. Save.
+
+Your site will publish at:
+
+https://YOUR-GITHUB-NAME.github.io/REPOSITORY-NAME/
