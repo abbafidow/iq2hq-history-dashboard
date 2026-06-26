@@ -7,149 +7,89 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="hero">
+  <header class="topbar">
     <div>
-      <p class="eyebrow">IQ2GQ - Where intellect meets style</p>
+      <p class="eyebrow">IQ2GQ</p>
       <h1>Intelligence Centre</h1>
-      <p class="subhead">Historical search, leaderboards, sports intelligence, records and decision support from the full pick dataset.</p>
+      <p class="sub">Historical pick analysis for members, sports, odds, bet types and current form.</p>
     </div>
-    <div class="hero-actions">
-      <div class="status-card"><b id="dataCount">0</b><span>resulted picks</span></div>
-      <div class="status-card"><b id="dateRange">-</b><span>history range</span></div>
-    </div>
+    <div class="status" id="dataStatus">Loading data...</div>
   </header>
 
-  <nav class="tabs" aria-label="Dashboard pages">
-    <button class="tab active" data-page="home">Home</button>
-    <button class="tab" data-page="members">Members</button>
-    <button class="tab" data-page="sports">Sports</button>
-    <button class="tab" data-page="bets">Bet types</button>
-    <button class="tab" data-page="odds">Odds explorer</button>
-    <button class="tab" data-page="teams">Teams/options</button>
-    <button class="tab" data-page="records">Records</button>
-    <button class="tab" data-page="insights">AI insights</button>
-    <button class="tab" data-page="search">Search</button>
+  <nav class="tabs" aria-label="Sections">
+    <button data-page="home" class="active">Home</button>
+    <button data-page="members">Members</button>
+    <button data-page="sports">Sports</button>
+    <button data-page="bets">Bet types</button>
+    <button data-page="odds">Odds</button>
+    <button data-page="records">Records</button>
+    <button data-page="insights">Insights</button>
+    <button data-page="search">Search</button>
   </nav>
 
+  <section class="filters" aria-label="Filters">
+    <label>Member<select id="memberFilter"><option value="">All</option></select></label>
+    <label>Sport group<select id="sportFilter"><option value="">All</option></select></label>
+    <label>Bet type<select id="betFilter"><option value="">All</option></select></label>
+    <label>Year<select id="yearFilter"><option value="">All</option></select></label>
+    <label>Odds<select id="oddsFilter"><option value="">All</option></select></label>
+    <label>Result<select id="resultFilter"><option value="">All</option><option>Yes</option><option>No</option></select></label>
+    <label class="grow">Search<input id="textFilter" type="search" placeholder="NRL, Warriors, Bulldogs, H2H..."></label>
+    <label>Min picks<input id="minPicks" type="number" min="1" value="10"></label>
+    <button id="resetBtn" type="button">Reset</button>
+  </section>
+
+  <section class="quick" id="quickButtons"></section>
+
   <main>
-    <section class="panel filters">
-      <div class="panel-title">
-        <h2>Global filters</h2>
-        <button id="resetBtn" type="button">Reset filters</button>
+    <section id="home" class="page active">
+      <div class="cards" id="summaryCards"></div>
+      <div class="grid two">
+        <article class="panel"><h2>Top members</h2><div id="homeMembers"></div></article>
+        <article class="panel"><h2>Sport performance</h2><div id="homeSports"></div></article>
       </div>
-      <div class="filter-grid">
-        <label>Search
-          <input id="searchInput" type="search" placeholder="Warriors, Ravens, H2H, NRL, etc">
-        </label>
-        <label>Member
-          <select id="memberFilter"><option value="">All members</option></select>
-        </label>
-        <label>Year
-          <select id="yearFilter"><option value="">All years</option></select>
-        </label>
-        <label>Sport group
-          <select id="sportGroupFilter"><option value="">All sport groups</option></select>
-        </label>
-        <label>Specific sport
-          <select id="sportFilter"><option value="">All sports</option></select>
-        </label>
-        <label>Bet category
-          <select id="betCategoryFilter"><option value="">All bet categories</option></select>
-        </label>
-        <label>Odds band
-          <select id="oddsBandFilter"><option value="">All odds</option></select>
-        </label>
-        <label>Result
-          <select id="resultFilter"><option value="">All results</option><option value="Yes">Wins only</option><option value="No">Losses only</option></select>
-        </label>
-        <label>Minimum picks
-          <input id="minPicks" type="number" min="1" max="200" value="8">
-        </label>
-        <label>Rank by
-          <select id="sortBy"><option value="score">Balanced score</option><option value="success">Success rate</option><option value="wins">Wins</option><option value="roi">$10 return</option><option value="avgOdds">Average odds</option></select>
-        </label>
+      <div class="grid two">
+        <article class="panel"><h2>Member success rate</h2><canvas id="memberChart" height="220"></canvas></article>
+        <article class="panel"><h2>Odds bands</h2><canvas id="oddsChart" height="220"></canvas></article>
       </div>
-      <div class="quick-buttons" id="presetButtons"></div>
-      <p class="note">The minimum-picks setting protects against false leaders from one-off wins. Balanced score weighs success rate, sample size and the $10 return metric.</p>
     </section>
 
-    <section id="page-home" class="page active">
-      <section class="kpi-grid" id="kpiGrid"></section>
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Top members</h2><span id="rankingSummary"></span></div><div class="table-wrap"><table id="homeMemberTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Member success rate</h2><span>qualified members</span></div><canvas id="memberChart" height="320"></canvas></div>
-      </section>
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Best combinations</h2><span>sport group + bet type</span></div><div class="table-wrap"><table id="homeComboTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Sport performance</h2><span>top volume groups</span></div><canvas id="sportChart" height="320"></canvas></div>
-      </section>
+    <section id="members" class="page">
+      <article class="panel"><h2>Member leaderboard</h2><p class="hint">Filtered by the controls above. Use minimum picks to avoid one-off noise.</p><div id="membersTable"></div></article>
     </section>
 
-    <section id="page-members" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Member leaderboard</h2><span>filtered</span></div><div class="table-wrap tall"><table id="memberTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Member profile</h2><span id="profileHint">select or filter a member</span></div><div id="memberProfile" class="profile"></div></div>
-      </section>
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Member strengths</h2><span>best categories</span></div><div class="table-wrap"><table id="memberStrengthTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Current form</h2><span>last 20 picks</span></div><div class="table-wrap"><table id="formTable"></table></div></div>
-      </section>
+    <section id="sports" class="page">
+      <article class="panel"><h2>Sports and competitions</h2><div id="sportsTable"></div></article>
     </section>
 
-    <section id="page-sports" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Sports leaderboard</h2><span>filtered</span></div><div class="table-wrap tall"><table id="sportsTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Best member by sport</h2><span>minimum picks applied</span></div><div class="table-wrap tall"><table id="bestMemberSportTable"></table></div></div>
-      </section>
-      <section class="panel"><div class="panel-title"><h2>Sport x member matrix</h2><span>success rate</span></div><div id="sportMemberMatrix" class="matrix"></div></section>
+    <section id="bets" class="page">
+      <article class="panel"><h2>Bet type performance</h2><div id="betsTable"></div></article>
     </section>
 
-    <section id="page-bets" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Bet type leaderboard</h2><span>filtered</span></div><div class="table-wrap"><table id="betTypeTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Best member by bet type</h2><span>minimum picks applied</span></div><div class="table-wrap"><table id="bestMemberBetTable"></table></div></div>
-      </section>
-      <section class="panel"><div class="panel-title"><h2>Bet type x odds matrix</h2><span>success rate and sample</span></div><div id="betOddsMatrix" class="matrix"></div></section>
+    <section id="odds" class="page">
+      <article class="panel"><h2>Odds explorer</h2><div id="oddsTable"></div></article>
+      <article class="panel"><h2>Best member by odds band</h2><div id="oddsMemberTable"></div></article>
     </section>
 
-    <section id="page-odds" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Odds band performance</h2><span>all filtered picks</span></div><div class="table-wrap"><table id="oddsTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Member x odds heatmap</h2><span>success rate</span></div><div id="heatmap" class="heatmap"></div></div>
-      </section>
-      <section class="panel"><div class="panel-title"><h2>$2+ hunters</h2><span>ranked high-odds performance</span></div><div class="table-wrap"><table id="highOddsTable"></table></div></section>
+    <section id="records" class="page">
+      <div class="grid two">
+        <article class="panel"><h2>Best winning streaks</h2><div id="winStreaks"></div></article>
+        <article class="panel"><h2>Best landed odds</h2><div id="bestOdds"></div></article>
+      </div>
+      <article class="panel"><h2>Largest crash odds</h2><div id="crashOdds"></div></article>
     </section>
 
-    <section id="page-teams" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Most backed options</h2><span>teams or selections</span></div><div class="table-wrap tall"><table id="optionTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Best member by option</h2><span>minimum picks applied</span></div><div class="table-wrap tall"><table id="optionMemberTable"></table></div></div>
-      </section>
+    <section id="insights" class="page">
+      <article class="panel"><h2>Recommendation style insights</h2><div id="insightsList"></div></article>
+      <article class="panel"><h2>Best combinations</h2><div id="combosTable"></div></article>
     </section>
 
-    <section id="page-records" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Records from loaded data</h2><span>calculated</span></div><div class="table-wrap"><table id="recordsTable"></table></div></div>
-        <div class="panel"><div class="panel-title"><h2>Streaks</h2><span>calculated by date order</span></div><div class="table-wrap"><table id="streakTable"></table></div></div>
-      </section>
-      <section class="panel"><div class="panel-title"><h2>Worst crash list</h2><span>lowest losing odds and biggest high-odds misses</span></div><div class="table-wrap"><table id="crashTable"></table></div></section>
-    </section>
-
-    <section id="page-insights" class="page">
-      <section class="grid two-col">
-        <div class="panel"><div class="panel-title"><h2>Recommendation engine</h2><span>rules-based</span></div><div id="recommendations" class="insights"></div></div>
-        <div class="panel"><div class="panel-title"><h2>Risk warnings</h2><span>weak spots</span></div><div id="warnings" class="insights"></div></div>
-      </section>
-      <section class="panel"><div class="panel-title"><h2>Question builder</h2><span>click a question to apply filters</span></div><div id="questionButtons" class="question-grid"></div></section>
-    </section>
-
-    <section id="page-search" class="page">
-      <section class="panel"><div class="panel-title"><h2>Pick search results</h2><span id="pickSummary"></span></div><div class="table-wrap very-tall"><table id="pickTable"></table></div></section>
+    <section id="search" class="page">
+      <article class="panel"><h2>Pick search</h2><div id="historyTable"></div></article>
     </section>
   </main>
 
-  <footer><p>Static GitHub Pages site. No login, server or database required. Replace data.js to update the dataset.</p></footer>
-
+  <footer>Use this as proof of concept only. Small samples can mislead; use the minimum picks filter.</footer>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
