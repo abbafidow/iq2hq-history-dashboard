@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IQ2GQ Historical Performance Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">IQ2GQ</p>
+      <h1>Historical Performance Dashboard</h1>
+      <p class="sub">Search members, sports, teams, bet types and odds ranges. Use this as a discussion tool, not a guaranteed prediction engine.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel filters">
+      <label>Search
+        <input id="search" type="search" placeholder="e.g. Warriors, NFL, H2H, SB">
+      </label>
+      <label>Member
+        <select id="member"></select>
+      </label>
+      <label>Sport group
+        <select id="sportGroup"></select>
+      </label>
+      <label>Specific sport
+        <select id="sport"></select>
+      </label>
+      <label>Bet type
+        <select id="betType"></select>
+      </label>
+      <label>Year
+        <select id="year"></select>
+      </label>
+      <label>Odds min
+        <input id="oddsMin" type="number" step="0.01" placeholder="1.00">
+      </label>
+      <label>Odds max
+        <input id="oddsMax" type="number" step="0.01" placeholder="10.00">
+      </label>
+      <label>Minimum picks for rankings
+        <input id="minPicks" type="number" min="1" value="5">
+      </label>
+      <button id="reset">Reset</button>
+    </section>
+
+    <section class="cards">
+      <div class="card"><span>Total picks</span><strong id="totalPicks">0</strong></div>
+      <div class="card"><span>Wins</span><strong id="wins">0</strong></div>
+      <div class="card"><span>Success rate</span><strong id="successRate">0%</strong></div>
+      <div class="card"><span>Average odds</span><strong id="avgOdds">0.00</strong></div>
+      <div class="card"><span>Best member</span><strong id="bestMember">-</strong></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel chartPanel"><h2>Member success rate</h2><canvas id="memberChart"></canvas></div>
+      <div class="panel chartPanel"><h2>Sport group success rate</h2><canvas id="sportChart"></canvas></div>
+      <div class="panel chartPanel"><h2>Odds band performance</h2><canvas id="oddsChart"></canvas></div>
+      <div class="panel chartPanel"><h2>Year trend</h2><canvas id="yearChart"></canvas></div>
+    </section>
+
+    <section class="panel">
+      <div class="sectionHead">
+        <h2>Best fit rankings</h2>
+        <p>Ranked by success rate, then wins, then average odds. Minimum pick threshold applies.</p>
+      </div>
+      <div class="tableWrap">
+        <table id="rankings">
+          <thead><tr><th>Rank</th><th>Member</th><th>Picks</th><th>Wins</th><th>Losses</th><th>Success rate</th><th>Average odds</th><th>Best sport group</th><th>Best bet type</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="sectionHead">
+        <h2>Matching picks</h2>
+        <p>Shows the first 250 matching records.</p>
+      </div>
+      <div class="tableWrap">
+        <table id="picks">
+          <thead><tr><th>Date</th><th>Year</th><th>Member</th><th>Bet name</th><th>Bet type</th><th>Sport</th><th>Odds</th><th>Result</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>Built for static GitHub Pages hosting. Data source: IQ2GQ Longitudinal Data workbook.</footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
