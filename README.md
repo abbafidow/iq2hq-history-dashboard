@@ -1,23 +1,26 @@
-# IQ2GQ Intelligence Centre v1.0
+# IQ2GQ Intelligence Centre - Google Sheets live version
 
-Static proof-of-concept dashboard for IQ2GQ historical pick analysis.
+This version reads from the published Google Sheets CSV feed instead of data.js.
 
 ## Files to upload to GitHub
 
-Upload these five files to the top level of your GitHub repository:
+Upload or replace these files at the top level of the repository:
 
 - index.html
 - styles.css
 - app.js
-- data.js
 - README.md
 
-Do not upload the ZIP file.
+The website no longer needs data.js. You can leave the old data.js file in GitHub, but it is not used if index.html has been replaced.
 
-## GitHub Pages
+## Google Sheet source
 
-Repository Settings - Pages - Deploy from a branch - main - root - Save.
+The live CSV source is set inside app.js as GOOGLE_SHEET_CSV_URL.
 
-## Notes
+## Updating data
 
-This version uses data.js as a static data file. It is intended as a proof of concept. A permanent version should connect to the Google Sheet directly so updates happen automatically.
+Add new rows to Raw_History or Raw_Live. Website_Data should combine both tabs. Because the website reads Website_Data, the site updates after the published Google Sheet refreshes. Google can cache published CSV feeds for a few minutes.
+
+## Refreshing
+
+After changing the sheet or GitHub files, wait 2-5 minutes and press Ctrl + Shift + R on the website.
